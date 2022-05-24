@@ -210,7 +210,7 @@ function criarDivDeCampoInvalido(idItem, textoErro, isFocarNoCampo) {
         console.log("CPF inválido");
 
     } else {
-        fetch(URL_API + "/api/documentation#/Cadastro/81bd906c97113cd1f0b1905660e54883" + cpfPreenchido, {
+        fetch(URL_API + "/api/documentation#/Cadastro/" + cpfPreenchido, {
             method: "GET",
             headers: new Headers({
                 Accept: "application/json",
