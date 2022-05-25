@@ -197,20 +197,17 @@ function criarDivDeCampoInvalido(idItem, textoErro, isFocarNoCampo) {
     elDiv.classList.add("invalid-feedback");
 }
 
-//preenche dados cpf
+/*preenche dados cpf
+------------------------------------------*/
 
-
-
-//------------------------------------------//
-
- function preencheCpf() {
+ function consultaCadastro() {
     let campoCpf = document.getElementById("cadastroCpf")
     let cpfPreenchido = campoCpf.value.replaceAll("-", "").replaceAll(".", "");
     if (cpfPreenchido == null || cpfPreenchido == undefined || cpfPreenchido.length != 11) {
         console.log("CPF inválido");
 
     } else {
-        fetch(URL_API + "/api/documentation#/Cadastro/" + cpfPreenchido, {
+        fetch(URL_API + "/api/v1/cadastro/" + cpfPreenchido, {
             method: "GET",
             headers: new Headers({
                 Accept: "application/json",
@@ -223,8 +220,27 @@ function criarDivDeCampoInvalido(idItem, textoErro, isFocarNoCampo) {
                 if (dadosCpf && !dadosCpf.message) {
                     let campoNome = document.getElementById("cadastroNomeCompleto");
                     let campoData = document.getElementById("cadastroDataNascimento");
+                    let campoCep = document.getElementById("cadastroCep");
+                    let campoUf = document.getElementById("cadastroUf");
+                    let campoLogradouro = document.getElementById("cadastroLogradouro");
+                    let campoNumero = document.getElementById("cadastroNumeroLogradouro");
+                    let campoEmail = document.getElementById("cadastroEmail");
+                    let campoCidade = document.getElementById("cadastroCidade");
+                    let campoExpectativa = document.getElementById("cadastroExpectativa");
+
                     campoNome.value = dadosCpf.nomeCompleto ? dadosCpf.nomeCompleto : "";
                     campoData.value = dadosCpf.dataNascimento ? dadosCpf.dataNascimento : "";
+                    campoCep.value = dadosCpf.cep ? dadosCpf.cep:"";
+                    campoUf.value = dadosCpf.uf ? dadosCpf.uf:"";
+                    campoLogradouro.value = dadosCpf.logradouro ? dadosCpf.logradouro:"";
+                    campoNumero.value = dadosCpf.numeroLogradouro ? dadosCpf.numeroLogradouro:"";
+                    campoEmail.value = dadosCpf.email ? dadosCpf.email:"";
+                    campoCidade.value = dadosCpf.cidade ? dadosCpf.cidade:"";
+                    campoExpectativa.value = dadosCpf.expectativa ? dadosCpf.expectativa:"";
+                    document.querySelector("[name=cadastroSexo][value =" + dadosCpf.sexo+"]").checked=true;
+
+                    $('#modalCpf').modal('show')
+
                 } else {
                     console.log(dadosCpf.message);
 
@@ -233,5 +249,18 @@ function criarDivDeCampoInvalido(idItem, textoErro, isFocarNoCampo) {
                 console.log(err);
             })
     }
+}
 
+function deletaCadastro(){
+    let campoCpf = document.getElementById("cadastroCpf")
+    let cpfPreenchido = campoCpf.value.replaceAll("-", "").replaceAll(".", "");
+    fetch(URL_API + "/api/v1/cadastro/" + cpfPreenchido, {
+        method: "DELETE",
+        headers: new Headers({
+            Accept: "application/json",
+            'Content-Type': "application/json",
+        }),
+    }).then(response => {
+        formCadastro.reset();
+    })
 }
