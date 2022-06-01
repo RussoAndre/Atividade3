@@ -25,12 +25,13 @@ function enviarFormularioCadastro(event) {
     $("#formCadastro .is-invalid").removeClass("is-invalid");
 
     fetch(URL_API + "/api/v1/cadastro", {
-        method: "POST",
+        method: document.getElementById("cadastroId").value == "" ?  "POST" : "PUT",
         headers: new Headers({
             Accept: "application/json",
             'Content-Type': "application/json",
         }),
         body: JSON.stringify({
+            id: document.getElementById("cadastroId").value,
             nomeCompleto: document.getElementById("cadastroNomeCompleto").value,
             dataNascimento: document.getElementById("cadastroDataNascimento").value, 
             sexo: document.querySelector("[name=cadastroSexo]:checked").value,
@@ -64,7 +65,7 @@ function enviarFormularioCadastro(event) {
             }else{
                 alert("Ocorreu um erro não tratado");
             }   
-        }else if(response && response.status === 201){
+        }else if(response && response.status === 201 || response.status === 200){
             if(response.json.message){
                 alert(response.json.message);
             }else{
@@ -218,6 +219,7 @@ function criarDivDeCampoInvalido(idItem, textoErro, isFocarNoCampo) {
                 return response.json();
             }).then(dadosCpf => {
                 if (dadosCpf && !dadosCpf.message) {
+                    let campoId= document.getElementById("cadastroId")
                     let campoNome = document.getElementById("cadastroNomeCompleto");
                     let campoData = document.getElementById("cadastroDataNascimento");
                     let campoCep = document.getElementById("cadastroCep");
@@ -228,6 +230,7 @@ function criarDivDeCampoInvalido(idItem, textoErro, isFocarNoCampo) {
                     let campoCidade = document.getElementById("cadastroCidade");
                     let campoExpectativa = document.getElementById("cadastroExpectativa");
 
+                    campoId.value= dadosCpf.id ? dadosCpf.id : "";
                     campoNome.value = dadosCpf.nomeCompleto ? dadosCpf.nomeCompleto : "";
                     campoData.value = dadosCpf.dataNascimento ? dadosCpf.dataNascimento : "";
                     campoCep.value = dadosCpf.cep ? dadosCpf.cep:"";
