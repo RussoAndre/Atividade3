@@ -177,6 +177,10 @@
                         <label for="cadastroLogradouro">Logradouro:</label>
                         <input type="text" class="form-control" id="cadastroLogradouro" placeholder="Logradouro">
                     </div>
+                    <div>
+                        <input type="hidden" id="cadastroId" name="cadastroId">
+
+                    </div>
                     <div class="col-md-3 mb-3">
                         <label for="cadastroNumeroLogradouro">Número Logradouro:</label>
                         <input type="text" class="form-control" id="cadastroNumeroLogradouro"
@@ -288,7 +292,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Alterar</button>
-                        <button type="button" class="btn btn-primary" onclick="deletaCadastro()" data-dismiss = "modal">Excluir</button>
+                        <button type="button" class="btn btn-primary" onclick="deletaCadastro()">Excluir</button>
                     </div>
                 </div>
             </div>
